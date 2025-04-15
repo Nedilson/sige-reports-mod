@@ -19,7 +19,7 @@ function menu() {
     var message = "Selecione a opção desejada:\n";
     options.forEach(function(option, index) {
         // Marca com (X) a última opção selecionada
-        var marker = (lastOption === (index + 1)) ? " (X)" : "";
+        var marker = (lastOption === (index + 1)) ? "(X) " : "";
         message += marker + (index + 1) + " - " + option.name + "\n";
     });
     message += "\nDigite o número correspondente e confirme.\n" +
