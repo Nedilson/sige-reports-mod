@@ -1,25 +1,66 @@
+var lastOption = null;
 
-// Verifica se a tabela com o id "tblistmatriculaturma" está presente no DOM
-if (document.getElementById('tblistmatriculaturma')) {
-    // Pede confirmação ao usuário antes de continuar
-    var confirmacao = confirm('A tabela com o id "tblistmatriculaturma" está presente no DOM. Deseja continuar?');
-
-    // Verifica a resposta do usuário
-    if (confirmacao) {
-        console.log('Usuário escolheu continuar.');
-        // Coloque o código adicional que você deseja executar aqui
-        // relOrien();
-        // relParaProf();
-        // relContMat();
-        
-         restAlim();
-    } else {
-        console.log('Usuário escolheu não continuar.');
-        // Coloque o código para lidar com a escolha de não continuar aqui, se necessário
+function menu() {
+    // Verifica se a tabela com o id 'tblistmatriculatura' existe no DOM
+    if (!document.getElementById('tblistmatriculatura')) {
+        console.log('A tabela com o id "tblistmatriculatura" não foi encontrada no DOM.');
+        return;
     }
-} else {
-    console.log('A tabela com o id "tblistmatriculaturma" não foi encontrada no DOM.');
+    
+    // Array de opções com funções associadas
+    var options = [
+        { name: 'relOrien', func: relOrien },
+        { name: 'relParaProf', func: relParaProf },
+        { name: 'relContMat', func: relContMat },
+        { name: 'restAlim', func: restAlim }
+    ];
+    
+    // Constroi a mensagem para exibição no prompt com as opções numeradas.
+    var message = "Selecione a opção desejada:\n";
+    options.forEach(function(option, index) {
+        // Marca com (X) a última opção selecionada
+        var marker = (lastOption === (index + 1)) ? " (X)" : "";
+        message += (index + 1) + " - " + option.name + marker + "\n";
+    });
+    message += "\nDigite o número correspondente e confirme.\n" +
+               "(Deixe em branco para executar a última opção selecionada)";
+    
+    // Solicita a entrada do usuário
+    var userInput = prompt(message, "");
+    
+    // Se o usuário cancelar, não faz nada
+    if (userInput === null) {
+        console.log("Usuário cancelou a seleção.");
+        return;
+    }
+    
+    var selectedOption;
+    if (userInput.trim() === "") {
+        // Se o usuário confirmar sem digitar nada, verifica se há uma última opção armazenada
+        if (lastOption !== null) {
+            selectedOption = lastOption;
+        } else {
+            console.log("Nenhuma opção anterior selecionada. Nenhuma ação será executada.");
+            return;
+        }
+    } else {
+        selectedOption = parseInt(userInput, 10);
+        // Verifica se o input é um número válido dentro do intervalo de opções
+        if (isNaN(selectedOption) || selectedOption < 1 || selectedOption > options.length) {
+            console.log("Opção inválida. Nenhuma ação será executada.");
+            return;
+        }
+    }
+    
+    // Atualiza a última opção selecionada e informa qual foi escolhida
+    lastOption = selectedOption;
+    console.log("Opção selecionada: " + lastOption);
+    
+    // Executa a função correspondente à opção selecionada
+    options[selectedOption - 1].func();
 }
+
+main();
 
 function restAlim() {
   // 1. Injetar CSS com toda a estilização necessária
