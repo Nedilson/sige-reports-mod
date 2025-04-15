@@ -2,8 +2,8 @@ var lastOption = null;
 
 function menu() {
     // Verifica se a tabela com o id 'tblistmatriculatura' existe no DOM
-    if (!document.getElementById('tblistmatriculatura')) {
-        console.log('A tabela com o id "tblistmatriculatura" não foi encontrada no DOM.');
+    if (!document.getElementById('tblistmatriculaturma')) {
+        console.log('A tabela com o id "tblistmatriculaturma" não foi encontrada no DOM.');
         return;
     }
     
