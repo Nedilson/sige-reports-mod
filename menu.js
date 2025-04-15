@@ -60,4 +60,4 @@ function menu() {
     options[selectedOption - 1].func();
 }
 
-main();
+menu();
