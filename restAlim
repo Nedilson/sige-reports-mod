@@ -1,0 +1,108 @@
+function restAlim() {
+
+	// 1. Remover os que não tem restrição
+	const tabelasRelatorio = document.querySelectorAll(".table-relatorio.borda-table");
+	tabelasRelatorio.forEach(tabela => {
+		filtrarTabelaRelatorio(tabela);
+	});
+	function filtrarTabelaRelatorio(tabela) {
+		const corpoTabela = tabela.querySelector("tbody");
+		if (corpoTabela) {
+			Array.from(corpoTabela.rows).forEach(linha => {
+				if (linha.cells.length >= 4 && linha.cells[3].textContent.trim() === "NÃO") {
+					linha.remove();
+				}
+			});
+		}
+	}
+
+
+	// 2. Criar cabeçalho
+	const tabelasCabecalho = document.querySelectorAll("#tbcabecalho");
+	const textoTurno = obterTextoTurno(tabelasCabecalho);
+	console.log("textoTurno: " + textoTurno)
+	const dataFormatada = formatarDataAtual();
+
+	const cabecalhoGlobal = criarCabecalhoGlobal(textoTurno, dataFormatada);
+  	// anexar objeto cabeçalho no HTML:
+	document.body.insertBefore(cabecalhoGlobal, document.body.firstChild);
+
+	function criarCabecalhoGlobal(textoTurno, dataFormatada) {
+		const cabecalhoGlobal = document.createElement("div");
+		cabecalhoGlobal.classList.add("cabecalho-global");
+
+		const linhaCabecalho1 = document.createElement("div");
+		linhaCabecalho1.classList.add("linha-cabecalho1");
+		linhaCabecalho1.textContent = `RESTRIÇÃO ALIMENTAR — ${dataFormatada}`;
+		cabecalhoGlobal.appendChild(linhaCabecalho1);
+
+		// Linha 2 - Turno
+		const linhaCabecalho2 = document.createElement("div");
+		linhaCabecalho2.classList.add("linha-cabecalho2");
+		const linkTurno = document.createElement("a");
+		linkTurno.classList.add("turno-cabecalho");
+		linkTurno.textContent = textoTurno;
+		linhaCabecalho2.appendChild(linkTurno);
+		cabecalhoGlobal.appendChild(linhaCabecalho2);
+
+		return cabecalhoGlobal;
+	}
+
+  	// Função para formatar a data atual no formato "DIA_DA_SEMANA, DD/MM/YYYY"
+	function formatarDataAtual() {
+		const data = new Date();
+		const diasSemana = [
+			"DOMINGO", "SEGUNDA-FEIRA", "TERÇA-FEIRA",
+			"QUARTA-FEIRA", "QUINTA-FEIRA", "SEXTA-FEIRA", "SÁBADO"
+		];
+		const nomeDia = diasSemana[data.getDay()];
+		const dia = String(data.getDate()).padStart(2, "0");
+		const mes = String(data.getMonth() + 1).padStart(2, "0");
+		const ano = data.getFullYear();
+		return `${nomeDia}, ${dia}/${mes}/${ano}`;
+	}
+
+	function obterTextoTurno(tabelasCabecalho) {
+		let temMat = false, temVesp = false;
+		tabelasCabecalho.forEach(tabela => {
+			const linhas = tabela.querySelectorAll("tr");
+			if (linhas.length > 0 && linhas[0].cells.length >= 2) {
+				const nomeTurma = linhas[0].cells[1].textContent.trim();
+				console.log("NomeTurma: " + nomeTurma);
+				if (nomeTurma.endsWith("MAT")) temMat = true;
+				if (nomeTurma.endsWith("VESP")) temVesp = true;
+			}
+		});
+		if (temMat && temVesp) return "MATUTINO / VESPERTINO";
+		if (temMat) return "MATUTINO";
+		if (temVesp) return "VESPERTINO";
+		return "";
+	}
+
+	tabelasCabecalho.forEach((tabelaCabecalho, indice) => {
+		criarTituloTurma(tabelaCabecalho, indice);
+	});
+
+	function criarTituloTurma(tabelaCabecalho, indice) {
+		const linhas = tabelaCabecalho.querySelectorAll("tr");
+		const nomeTurma = linhas[0].cells[1].textContent.trim();
+		console.log("nomeTurma: " + nomeTurma);
+
+  		// Cria o título da turma
+		const tituloTurma = document.createElement("div");
+		tituloTurma.classList.add("titulo-turma");
+
+		const spanNumeroSala = document.createElement("span");
+		spanNumeroSala.classList.add("numero-sala");
+		spanNumeroSala.textContent = `SALA ${indice + 1}:`;
+
+		tituloTurma.appendChild(spanNumeroSala);
+		tituloTurma.appendChild(document.createTextNode(` ${nomeTurma}`));
+
+  		// Insere antes da tabela, usando o pai correto
+		tabelaCabecalho.parentNode.insertBefore(tituloTurma, tabelaCabecalho);
+
+  		// Remove a tabela de cabeçalho original
+		tabelaCabecalho.remove();
+	}
+}
