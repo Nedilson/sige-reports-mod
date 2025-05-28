@@ -60,7 +60,7 @@ function menu() {
     options[selectedOption - 1].func();
 }
 
-main();
+menu();
 
 function restAlim() {
   // 1. Injetar CSS com toda a estilização necessária
