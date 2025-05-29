@@ -323,7 +323,7 @@ function relOrien() {
 }
 
 function datarCabecalho() {
-    var cabecalhos = document.querySelectorAll("#tbcabecalho tr:nth-child(2) td:nth-child(4)");
+    var cabecalhos = document.querySelectorAll("#tbcabecalho tr:nth-child(1) td:nth-child(4)");
     console.log(cabecalhos);
     const opcoes = {
         weekday: 'long',
