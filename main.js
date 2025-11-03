@@ -317,6 +317,12 @@ function relParaProf() {
 }
 
 function relOrien() {
+    // Pegar todos os elementos do campo elementos Necessidades especiais 
+    const elementosNE = document.querySelectorAll('td:nth-child(5)')
+
+    elementosNE.forEach(element => {
+      substituirPalavras(element, {"Não possuem necessidades especiais":""});
+    });
     datarCabecalho();
     console.log('Função relOrien executada.');
     unir_dados(false); // Passa false para evitar a remoção de números da obs
@@ -482,5 +488,6 @@ function formatarCampos() {
 
     });
 }
+
 
 
