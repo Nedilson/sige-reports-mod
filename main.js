@@ -13,6 +13,7 @@ function menu() {
         { name: 'relParaProf', func: relParaProf },
         { name: 'relContMat', func: relContMat },
         { name: 'restAlim', func: restAlim }
+        { name: 'Baixar tabela unificada', func: baixarTabelaUnificada }
     ];
     
     // Constroi a mensagem para exibição no prompt com as opções numeradas.
@@ -489,5 +490,36 @@ function formatarCampos() {
     });
 }
 
+function baixarTabela() {
+    const tabelas = document.querySelectorAll('#tblistmatriculaturma');
+    if (!tabelas.length) return console.log('Tabela não encontrada');
+    
+    const tabelaPrincipal = tabelas[0];
+    
+    if (tabelas.length > 1) {
+        const tbody = tabelaPrincipal.querySelector('tbody') || 
+                     (() => { const t = document.createElement('tbody'); tabelaPrincipal.appendChild(t); return t; })();
+        
+        for (let i = 1; i < tabelas.length; i++) {
+            // Busca apenas as linhas que não são cabeçalhos
+            const linhas = tabelas[i].querySelectorAll('tbody tr:not(:has(th)), tbody tr > td, tr:not(:has(th)), tr > td');
+            
+            // Filtra para garantir que pegamos apenas linhas completas (com células)
+            const linhasCompletas = Array.from(tabelas[i].querySelectorAll('tbody tr, tr'))
+                .filter(linha => linha.querySelector('td') && !linha.querySelector('th'));
+            
+            // Adiciona apenas as linhas que contêm dados (não cabeçalhos)
+            linhasCompletas.forEach(linha => tbody.appendChild(linha.cloneNode(true)));
+            
+            tabelas[i].parentNode?.removeChild(tabelas[i]);
+        }
+    }
+    
+    const link = document.createElement('a');
+    link.href = 'data:text/html;charset=utf-8,' + encodeURIComponent(tabelaPrincipal.outerHTML);
+    link.download = `tabela_${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.html`;
+    document.body.appendChild(link).click();
+    document.body.removeChild(link);
+}
 
 
