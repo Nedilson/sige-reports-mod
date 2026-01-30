@@ -12,7 +12,7 @@ function menu() {
         { name: 'relOrien', func: relOrien },
         { name: 'relParaProf', func: relParaProf },
         { name: 'relContMat', func: relContMat },
-        { name: 'restAlim', func: restAlim }
+        { name: 'restAlim', func: restAlim },
         { name: 'Baixar tabela unificada', func: baixarTabelaUnificada }
     ];
     
@@ -521,5 +521,6 @@ function baixarTabela() {
     document.body.appendChild(link).click();
     document.body.removeChild(link);
 }
+
 
 
