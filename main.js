@@ -490,7 +490,7 @@ function formatarCampos() {
     });
 }
 
-function baixarTabela() {
+function baixarTabelaUnificada() {
     const tabelas = document.querySelectorAll('#tblistmatriculaturma');
     if (!tabelas.length) return console.log('Tabela não encontrada');
     
@@ -521,6 +521,7 @@ function baixarTabela() {
     document.body.appendChild(link).click();
     document.body.removeChild(link);
 }
+
 
 
 
