@@ -13,7 +13,8 @@ function menu() {
         { name: 'relParaProf', func: relParaProf },
         { name: 'relContMat', func: relContMat },
         { name: 'restAlim', func: restAlim },
-        { name: 'Baixar tabela unificada', func: baixarTabelaUnificada }
+        { name: 'Baixar tabela unificada', func: baixarTabelaUnificada },
+        { name: 'Baixar CSV', fun: baixarTabelaUnificadaCSV }
     ];
     
     // Constroi a mensagem para exibição no prompt com as opções numeradas.
@@ -522,6 +523,105 @@ function baixarTabelaUnificada() {
     document.body.removeChild(link);
 }
 
+function baixarTabelaUnificadaCSV() {
+    const tabelas = document.querySelectorAll('#tblistmatriculaturma');
+    if (!tabelas.length) return console.log('Tabela não encontrada');
+
+    const tabelaPrincipal = tabelas[0];
+
+    // 1. Unificar as tabelas visualmente
+    if (tabelas.length > 1) {
+        const tbodyPrincipal = tabelaPrincipal.querySelector('tbody') || tabelaPrincipal;
+
+        for (let i = 1; i < tabelas.length; i++) {
+            const linhasDados = Array.from(tabelas[i].querySelectorAll('tr'))
+                .filter(linha => linha.querySelector('td') && !linha.querySelector('th'));
+
+            linhasDados.forEach(linha => {
+                const clone = linha.cloneNode(true);
+                tbodyPrincipal.appendChild(clone);
+            });
+
+            // Remove a tabela extra da tela após unificar
+            tabelas[i].parentNode?.removeChild(tabelas[i]);
+        }
+    }
+
+    // 2. Aplicar a limpeza de "Não informado" visualmente
+    const todasAsCelulas = tabelaPrincipal.querySelectorAll('td');
+    todasAsCelulas.forEach(td => {
+        if (td.innerText.trim() === "Não informado") {
+            td.innerText = ""; 
+        }
+    });
+
+    // 3. Capturar o título via XPath para o nome do arquivo
+    let tituloDinamico = "";
+    try {
+        const resultadoXPath = document.evaluate(
+            '/html/body/div[2]/table[1]/tbody/tr/td[2]',
+            document,
+            null,
+            XPathResult.FIRST_ORDERED_NODE_TYPE,
+            null
+        );
+        tituloDinamico = resultadoXPath.singleNodeValue ? resultadoXPath.singleNodeValue.innerText.trim() : "tabela";
+    } catch (e) {
+        tituloDinamico = "tabela";
+    }
+
+    const nomeArquivo = `${tituloDinamico} (dados para capa).csv`;
+
+    // 4. Transformar a tabela em CSV (usando ponto e vírgula para Excel PT-BR)
+    const rows = [];
+    const trs = Array.from(tabelaPrincipal.querySelectorAll('tr'));
+    
+    trs.forEach(tr => {
+        const cells = Array.from(tr.querySelectorAll('th, td'));
+        const rowData = cells.map(cell => {
+            // Limpa quebras de linha e escapa aspas duplas
+            let text = cell.innerText.replace(/\r?\n|\r/g, ' ').replace(/"/g, '""').trim();
+            return `"${text}"`;
+        });
+        // Unindo colunas com ";" (padrão brasileiro) ou "," (padrão internacional)
+        if (rowData.length > 0) rows.push(rowData.join(';'));
+    });
+
+    const csvContent = rows.join('\n');
+    
+    // 5. Download com UTF-8 REAL (Excel Friendly)
+
+    // Codifica o conteúdo como UTF-8
+    const encoder = new TextEncoder();
+    const csvBytes = encoder.encode(csvContent);
+
+    // Cria BOM verdadeiro em bytes (UTF-8)
+    const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+
+    // Junta BOM + conteúdo
+    const finalBytes = new Uint8Array(bom.length + csvBytes.length);
+    finalBytes.set(bom, 0);
+    finalBytes.set(csvBytes, bom.length);
+
+    // Cria o Blob apenas com bytes
+    const blob = new Blob([finalBytes], { type: 'text/csv;charset=utf-8;' });
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = nomeArquivo;
+    link.style.display = 'none';
+
+    document.body.appendChild(link);
+    link.click();
+
+    setTimeout(() => {
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }, 100);
+
+}
 
 
 
