@@ -14,7 +14,7 @@ function menu() {
         { name: 'relContMat', func: relContMat },
         { name: 'restAlim', func: restAlim },
         { name: 'Baixar tabela unificada', func: baixarTabelaUnificada },
-        { name: 'Baixar CSV', fun: baixarTabelaUnificadaCSV }
+        { name: 'Baixar CSV', func: baixarTabelaUnificadaCSV }
     ];
     
     // Constroi a mensagem para exibição no prompt com as opções numeradas.
@@ -622,6 +622,7 @@ function baixarTabelaUnificadaCSV() {
     }, 100);
 
 }
+
 
 
 
