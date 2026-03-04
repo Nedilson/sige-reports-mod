@@ -1,4 +1,28 @@
-(function() {
+// Alterar ficha de matrícula
+
+// Polyfills para garantir que funções modernas de JavaScript funcionem em navegadores mais antigos
+// Verifica se o navegador suporta o método .matches() (que checa se um elemento corresponde a um seletor CSS)
+if (!Element.prototype.matches) {
+    // Se não suportar, tenta usar versões com prefixos de navegadores antigos (IE e Chrome/Safari antigos)
+    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+}
+
+// Verifica se o navegador suporta o método .closest() (que busca o ancestral mais próximo que combine com um seletor)
+if (!Element.prototype.closest) {
+    Element.prototype.closest = function(s) {
+        var el = this;
+        // Percorre a árvore do DOM subindo (do elemento para seus pais)
+        do {
+            // Se o elemento atual corresponder ao seletor, retorna ele
+            if (el.matches(s)) return el;
+            // Senão, sobe para o próximo nível (pai)
+            el = el.parentElement || el.parentNode;
+        } while (el !== null && el.nodeType === 1); // Continua até chegar ao topo do documento
+        return null; // Retorna null se nenhum ancestral for encontrado
+    };
+}
+
+function alterarFicha() {
     /**
      * Auxiliar para criar colunas Bootstrap
      */
@@ -390,22 +414,4 @@
     } else {
         setTimeout(executarTransformacoes, 100);
     }
-
-})();
-
-// Polyfills
-if (!Element.prototype.matches) {
-    Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
 }
-if (!Element.prototype.closest) {
-    Element.prototype.closest = function(s) {
-        var el = this;
-        do {
-            if (el.matches(s)) return el;
-            el = el.parentElement || el.parentNode;
-        } while (el !== null && el.nodeType === 1);
-        return null;
-    };
-}
-
-

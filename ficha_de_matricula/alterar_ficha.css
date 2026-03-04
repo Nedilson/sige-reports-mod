@@ -1,10 +1,12 @@
 /* ==========================================================================
    FICHA DE MATRÍCULA - MODERN DESIGN (A4 OPTIMIZED)
+   O CSS só é ativado quando a classe .ficha-alterada é adicionada ao body
+   via JS pela função alterarFicha()
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-:root {
+.ficha-alterada {
     --primary-color: #2c3e50;
     --secondary-color: #34495e;
     --accent-color: #3498db;
@@ -15,7 +17,7 @@
     --section-radius: 4px;
 }
 
-#wrapper-ficha-a4 {
+.ficha-alterada #wrapper-ficha-a4 {
     width: 19cm;
     margin: 0 auto;
     background: white;
@@ -24,7 +26,7 @@
 }
 
 /* Header Principal: Logo + Nome (Fixado em 2cm) */
-.header-principal-ficha {
+.ficha-alterada .header-principal-ficha {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Logo na esquerda, título na direita como no print */
@@ -35,19 +37,19 @@
     background: white;
 }
 
-.logo-container-topo {
+.ficha-alterada .logo-container-topo {
     height: 100%;
     display: flex;
     align-items: center;
 }
 
-.logo-ficha {
+.ficha-alterada .logo-ficha {
     max-height: 0.8cm;
     width: auto;
     object-fit: contain;
 }
 
-.titulo-ficha-destaque {
+.ficha-alterada .titulo-ficha-destaque {
     font-size: 18pt;
     font-weight: 900;
     color: var(--primary-color);
@@ -58,7 +60,7 @@
     line-height: 1.1;
 }
 
-body {
+body.ficha-alterada {
     font-family: 'Inter', sans-serif;
     color: var(--text-main);
     line-height: 1.2;
@@ -70,34 +72,34 @@ body {
 }
 
 /* Hidden Elements (User restricted: DO NOT REMOVE) */
-#identificacao_do_aluno_rg,
-#identificacao_do_aluno_orgao_exp,
-#identificacao_do_aluno_nacionalidade,
-#identificacao_do_aluno_nis,
-#identificacao_do_aluno_n_sus,
-#identificacao_do_aluno_tipo_sanguineo,
-#filiacao,
-#contatos,
-#transtorno_de_aprendizagem,
-#utiliza_transporte_escolar,
-#texto,
-#identificacao_do_aluno > table > tbody > tr > td:nth-child(2) > div:nth-child(7) > div > div:nth-child(2) {
+.ficha-alterada #identificacao_do_aluno_rg,
+.ficha-alterada #identificacao_do_aluno_orgao_exp,
+.ficha-alterada #identificacao_do_aluno_nacionalidade,
+.ficha-alterada #identificacao_do_aluno_nis,
+.ficha-alterada #identificacao_do_aluno_n_sus,
+.ficha-alterada #identificacao_do_aluno_tipo_sanguineo,
+.ficha-alterada #filiacao,
+.ficha-alterada #contatos,
+.ficha-alterada #transtorno_de_aprendizagem,
+.ficha-alterada #utiliza_transporte_escolar,
+.ficha-alterada #texto,
+.ficha-alterada #identificacao_do_aluno > table > tbody > tr > td:nth-child(2) > div:nth-child(7) > div > div:nth-child(2) {
     display: none !important;
 }
 
 /* Sections */
-.box {
+.ficha-alterada .box {
     margin-bottom: 8px;
     clear: both;
 }
 
 /* Grid System - Alinhamento Perfeito */
-#wrapper-ficha-a4 [class*="col-"] {
+.ficha-alterada #wrapper-ficha-a4 [class*="col-"] {
     padding-left: 0 !important;
     padding-right: 0 !important;
 }
 
-#wrapper-ficha-a4 .div-grid {
+.ficha-alterada #wrapper-ficha-a4 .div-grid {
     border: 1px solid var(--border-light) !important;
     padding: 3px 12px 3px 5px !important;
     font-size: 11px !important;
@@ -115,41 +117,41 @@ body {
 }
 
 /* Colapso de bordas para evitar linhas duplas e garantir alinhamento à direita */
-.row > [class*="col-"] + [class*="col-"].div-grid,
-.row > [class*="col-"] + [class*="col-"] > .div-grid {
+.ficha-alterada .row > [class*="col-"] + [class*="col-"].div-grid,
+.ficha-alterada .row > [class*="col-"] + [class*="col-"] > .div-grid {
     border-left: none !important;
 }
 
-.row + .row > [class*="col-"].div-grid,
-.row + .row > [class*="col-"] > .div-grid {
+.ficha-alterada .row + .row > [class*="col-"].div-grid,
+.ficha-alterada .row + .row > [class*="col-"] > .div-grid {
     border-top: none !important;
 }
 
 /* Remove borda esquerda da grid interna do aluno para não dobrar com a borda da foto */
-.container-campos-aluno .row > [class*="col-"]:first-child.div-grid,
-.container-campos-aluno .row > [class*="col-"]:first-child > .div-grid {
+.ficha-alterada .container-campos-aluno .row > [class*="col-"]:first-child.div-grid,
+.ficha-alterada .container-campos-aluno .row > [class*="col-"]:first-child > .div-grid {
     border-left: none !important;
 }
 
-.container-campos-aluno .row {
+.ficha-alterada .container-campos-aluno .row {
     display: flex !important;
     flex-wrap: nowrap !important;
     width: 100% !important;
 }
 
 /* Garante que a coluna da foto tenha largura estável e os campos ocupem o restante */
-#identificacao_do_aluno .row > .col-sm-2.div-grid {
+.ficha-alterada #identificacao_do_aluno .row > .col-sm-2.div-grid {
     flex: 0 0 4cm !important;
     width: 4cm !important;
     justify-content: center !important;
 }
 
-#identificacao_do_aluno .container-campos-aluno {
+.ficha-alterada #identificacao_do_aluno .container-campos-aluno {
     flex: 1 1 auto !important;
     padding: 0 !important;
 }
 
-.text-bold {
+.ficha-alterada .text-bold {
     color: var(--text-muted);
     font-weight: 600 !important;
     font-size: 8.5px !important;
@@ -162,7 +164,7 @@ body {
    LARGURA AUTOMÁTICA ADAPTADA AO CONTEÚDO 
    Faz com que os campos ocupem o espaço necessário baseado no texto
 */
-#wrapper-ficha-a4 .row {
+.ficha-alterada #wrapper-ficha-a4 .row {
     display: flex !important;
     flex-wrap: nowrap !important;
 }
@@ -170,29 +172,29 @@ body {
 
 
 /* Campos da Identificação do Aluno que devem ser compactos (adaptados ao conteúdo) */
-#wrapper-ficha-a4 #identificacao_da_escola_id_inep_censo,
-#wrapper-ficha-a4 #identificacao_da_escola_telefone,
-#wrapper-ficha-a4 #identificacao_da_escola_email,
-#wrapper-ficha-a4 #identificacao_do_aluno_data_de_nascimento,
-#wrapper-ficha-a4 #identificacao_do_aluno_sexo,
-#wrapper-ficha-a4 #identificacao_do_aluno_cor_raca,
-#wrapper-ficha-a4 #identificacao_do_aluno_cpf,
-#wrapper-ficha-a4 #identificacao_do_aluno_id_matricula,
-#wrapper-ficha-a4 #identificacao_do_aluno_id_censo,
-#wrapper-ficha-a4 #horarios {
+.ficha-alterada #wrapper-ficha-a4 #identificacao_da_escola_id_inep_censo,
+.ficha-alterada #wrapper-ficha-a4 #identificacao_da_escola_telefone,
+.ficha-alterada #wrapper-ficha-a4 #identificacao_da_escola_email,
+.ficha-alterada #wrapper-ficha-a4 #identificacao_do_aluno_data_de_nascimento,
+.ficha-alterada #wrapper-ficha-a4 #identificacao_do_aluno_sexo,
+.ficha-alterada #wrapper-ficha-a4 #identificacao_do_aluno_cor_raca,
+.ficha-alterada #wrapper-ficha-a4 #identificacao_do_aluno_cpf,
+.ficha-alterada #wrapper-ficha-a4 #identificacao_do_aluno_id_matricula,
+.ficha-alterada #wrapper-ficha-a4 #identificacao_do_aluno_id_censo,
+.ficha-alterada #wrapper-ficha-a4 #horarios {
     flex: 0 0 auto !important;
     width: auto !important;
     min-width: fit-content !important;
 }
 
-#wrapper-ficha-a4 #observacoes {
+.ficha-alterada #wrapper-ficha-a4 #observacoes {
     flex: 1 1 auto !important;
 }
 
 /* Nome e CPF em fonte maior */
-#identificacao_do_aluno_nome,   
-#identificacao_da_escola_unidade_de_ensino,
-.col-destaque-cpf {
+.ficha-alterada #identificacao_do_aluno_nome,   
+.ficha-alterada #identificacao_da_escola_unidade_de_ensino,
+.ficha-alterada .col-destaque-cpf {
     font-size: 18px !important;
     font-weight: 1000 !important;
     color: var(--primary-color) !important;
@@ -200,7 +202,7 @@ body {
 
 
 /* Foto Area */
-.text-center[style*="height: 125px"] {
+.ficha-alterada .text-center[style*="height: 125px"] {
     width: 3cm !important;
     height: 4cm !important;
     border: 1px solid var(--border-light) !important;
@@ -215,8 +217,8 @@ body {
 }
 
 /* Signatures */
-.text-center br + br { display: none; }
-.text-center { font-size: 10px; margin-top: 10px; }
+.ficha-alterada .text-center br + br { display: none; }
+.ficha-alterada .text-center { font-size: 10px; margin-top: 10px; }
 
 /* Print Optimization */
 @media print {
@@ -224,27 +226,27 @@ body {
         size: A4;
         margin: 0;
     }
-    body {
+    body.ficha-alterada {
         margin: 0;
         padding: 0;
     }
-    #wrapper-ficha-a4 {
+    .ficha-alterada #wrapper-ficha-a4 {
         width: 19cm;
         margin: 0 auto;
         padding-top: 1cm; /* Margem superior na impressão */
     }
-    .div-grid {
+    .ficha-alterada .div-grid {
         border-color: #999 !important;
     }
 }
 
 
 /* Remove margens laterais das linhas dos campos do aluno */
-#identificacao_do_aluno .container-campos-aluno div.row {
+.ficha-alterada #identificacao_do_aluno .container-campos-aluno div.row {
   margin-left: 0px;
 }
 
-.div-title {
+.ficha-alterada .div-title {
     background-color: var(--bg-section) !important;
     border-left: 5px solid var(--accent-color) !important;
     padding-left: 6px !important;
@@ -254,7 +256,7 @@ body {
     height: auto !important;
 }
 
-.div-title p {
+.ficha-alterada .div-title p {
     color: var(--primary-color);
     font-weight: 700 !important;
     font-size: 10px !important;
@@ -263,41 +265,38 @@ body {
     letter-spacing: 1px;
 }
 
-#wrapper-ficha-a4 #filiacao1_cpf,
-#wrapper-ficha-a4 #filiacao2_cpf{
+.ficha-alterada #wrapper-ficha-a4 #filiacao1_cpf,
+.ficha-alterada #wrapper-ficha-a4 #filiacao2_cpf{
     width: 3cm !important;
     flex: 0 0 3cm !important;
 }
 /* campos que não quebram linha*/
-#identificacao_da_escola_endereco,
-#identificacao_do_aluno_endereco,
-#uso_de_imagem{
+.ficha-alterada #identificacao_da_escola_endereco,
+.ficha-alterada #identificacao_do_aluno_endereco,
+.ficha-alterada #uso_de_imagem{
     flex-direction: row !important;
     justify-content: top !important;
     text-transform: uppercase !important;
 }
 
 /* campos que não quebram linha, ajuste do span*/
-#identificacao_da_escola_endereco span,
-#identificacao_do_aluno_endereco span,
-#uso_de_imagem span{
+.ficha-alterada #identificacao_da_escola_endereco span,
+.ficha-alterada #identificacao_do_aluno_endereco span,
+.ficha-alterada #uso_de_imagem span{
     margin-top: 2px !important;
     margin-right: 5px !important;
     display: inline !important;
 }
 
-#uso_de_imagem span{
+.ficha-alterada #uso_de_imagem span{
     min-height: 10px;
     margin-right: 1px !important;
 }
 
-#uso_de_imagem {
+.ficha-alterada #uso_de_imagem {
     color: grey !important;
 }
 
-#wrapper-ficha-a4 #secao_observacoes .div-grid {
+.ficha-alterada #wrapper-ficha-a4 #secao_observacoes .div-grid {
     font-size: 13px !important;
 }
-
-
-

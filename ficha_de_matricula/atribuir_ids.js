@@ -1,4 +1,4 @@
-(function() {
+function atribuirIds() {
     /**
      * Função auxiliar para limpar e formatar strings para IDs
      */
@@ -268,4 +268,4 @@
     console.log("Dados extraídos e armazenados em 'window.dadosFichaExtraidos'.");
     console.log("Lista de todos os IDs atribuídos:", todosIdsAtribuidos);
     console.log("Para baixar o arquivo JSON, chame a função: baixarFichaJSON()");
-})();
+}   
