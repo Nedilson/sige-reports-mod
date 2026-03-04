@@ -273,7 +273,8 @@ body.ficha-alterada {
 /* campos que não quebram linha*/
 .ficha-alterada #identificacao_da_escola_endereco,
 .ficha-alterada #identificacao_do_aluno_endereco,
-.ficha-alterada #uso_de_imagem{
+.ficha-alterada #uso_de_imagem,
+.ficha-alterada #participa_do_s_programa_s_social_is{
     flex-direction: row !important;
     justify-content: top !important;
     text-transform: uppercase !important;
@@ -282,13 +283,17 @@ body.ficha-alterada {
 /* campos que não quebram linha, ajuste do span*/
 .ficha-alterada #identificacao_da_escola_endereco span,
 .ficha-alterada #identificacao_do_aluno_endereco span,
-.ficha-alterada #uso_de_imagem span{
+.ficha-alterada #uso_de_imagem span,
+.ficha-alterada #participa_do_s_programa_s_social_is span
+{
     margin-top: 2px !important;
     margin-right: 5px !important;
     display: inline !important;
 }
 
-.ficha-alterada #uso_de_imagem span{
+.ficha-alterada #uso_de_imagem span,
+.ficha-alterada #participa_do_s_programa_s_social_is span
+{
     min-height: 10px;
     margin-right: 1px !important;
 }
