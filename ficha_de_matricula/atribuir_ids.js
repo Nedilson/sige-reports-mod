@@ -43,6 +43,7 @@ function atribuirIds() {
         const campos = box.querySelectorAll('.div-grid');
         const contagemInterna = {};
         let currentSubContext = '';
+        let temSimSaude = false; // Controle para a seção de saúde
 
         campos.forEach(campo => {
             let labelText = '';
@@ -75,6 +76,36 @@ function atribuirIds() {
             // Lógica para textos descritivos e uso de imagem
             if (labelId.includes('autorizo_uso_da_imagem')) {
                 finalIdAtribuido = atribuirIdUnico(campo, 'uso_de_imagem', contagemInterna);
+            } else if (boxIdBase === 'saude') {
+                // Lógica específica para a caixa de Saúde
+                if (labelText.match(/^\d+\s*-/)) {
+                    // É a pergunta (ex: "1 - Já teve...")
+                    const num = labelText.split('-')[0].trim();
+                    finalIdAtribuido = `saude_pergunta_${num}`;
+                    dadosFicha[finalIdAtribuido] = labelText;
+                } else if (labelText === 'SIM' || labelText === 'NÃO' || labelText === '') {
+                    // É a resposta
+                    const num = (contagemInterna['saude_resposta'] || 0) + 1;
+                    contagemInterna['saude_resposta'] = num;
+                    finalIdAtribuido = `saude_resposta_${num}`;
+                    // Pegar todo o texto do campo, já que 'valorText' pode não pegar tudo corretamente
+                    valorText = campo.innerText.trim();
+
+                    // Lógica para ocultar linhas com resposta NÃO e controlar visibilidade da seção
+                    if (labelText === 'SIM') {
+                        temSimSaude = true;
+                    } else if (labelText === 'NÃO') {
+                        const linha = campo.closest('.container-fluid');
+                        if (linha) linha.style.display = 'none';
+                    } else if (labelText === '') {
+                        // Se estiver em branco, mantemos a visibilidade da seção para conferência
+                        temSimSaude = true;
+                    }
+                } else {
+                    // Permitir tags extensas na seção saude (IDs baseados no label sanitizado)
+                    finalIdAtribuido = atribuirIdUnico(campo, `saude_${labelId}`, contagemInterna);
+                    if (boxIdBase === 'saude') temSimSaude = true;
+                }
             } else if (valorText === '' && labelText.length > 40) {
                 // Textos descritivos longos sem valor preenchido
                 finalIdAtribuido = atribuirIdUnico(campo, 'texto', contagemInterna);
@@ -109,13 +140,23 @@ function atribuirIds() {
 
             // Armazenar o valor no objeto JSON
             if (finalIdAtribuido) {
-                if (finalIdAtribuido.startsWith('texto')) {
-                    dadosFicha[finalIdAtribuido] = labelText.trim();
-                } else {
-                    dadosFicha[finalIdAtribuido] = valorText;
+                // Se já não foi atribuído na lógica da saúde (que pega o labelText em vez do valorText)
+                if (dadosFicha[finalIdAtribuido] === undefined) {
+                    if (finalIdAtribuido.startsWith('texto') || (valorText === '' && labelText.length > 40)) {
+                        dadosFicha[finalIdAtribuido] = labelText.trim();
+                    } else if (boxIdBase === 'saude' && finalIdAtribuido.startsWith('saude_resposta')) {
+                        dadosFicha[finalIdAtribuido] = valorText;
+                    } else {
+                        dadosFicha[finalIdAtribuido] = valorText;
+                    }
                 }
             }
         });
+
+        // Se for a seção de saúde e não houver nenhuma resposta SIM (ou outro campo preenchido), oculta a seção inteira
+        if (boxIdBase === 'saude' && !temSimSaude) {
+            box.style.display = 'none';
+        }
     });
 
     // 3. Capturar campos avulsos (fora das boxes), como 'Data de impressão'
@@ -238,7 +279,6 @@ function atribuirIds() {
         "turma",
         "serie",
         "ano",
-        "saude",
         "necessidades_educacionais_especiais",
         "possui_condicoes_NEE",
         "condicoes_NEE",
@@ -257,11 +297,18 @@ function atribuirIds() {
         "data_de_impressao"
     ];
 
-    const ids_ocasionais = []; // Lista de IDs que não devem emitir alerta de faltante ou extra
+    const ids_ocasionais = [
+        "saude",
+        "texto"
+    ]; // Lista de IDs base que não devem emitir alerta de faltante ou extra
+
+    function isOcasional(id) {
+        return ids_ocasionais.some(ocasional => id === ocasional || id.startsWith(ocasional + '_'));
+    }
 
     // Verificação de conformidade com os IDs padrão
-    const faltantes = ids_padrao.filter(id => !todosIdsAtribuidos.includes(id) && !ids_ocasionais.includes(id));
-    const extras = todosIdsAtribuidos.filter(id => !ids_padrao.includes(id) && !ids_ocasionais.includes(id));
+    const faltantes = ids_padrao.filter(id => !todosIdsAtribuidos.includes(id) && !isOcasional(id));
+    const extras = todosIdsAtribuidos.filter(id => !ids_padrao.includes(id) && !isOcasional(id));
 
     if (faltantes.length > 0 || extras.length > 0) {
         let mensagem = "Divergência nos IDs encontrados:\n";

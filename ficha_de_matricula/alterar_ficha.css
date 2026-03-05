@@ -22,7 +22,7 @@
     margin: 0 auto;
     background: white;
     padding: 0;
-    max-height: 28; /* Altura máxima para toda ficha caber e uma folha A4 */
+    max-height: 28cm; /* Altura máxima para toda ficha caber e uma folha A4 */
 }
 
 /* Header Principal: Logo + Nome (Fixado em 2cm) */
@@ -181,6 +181,7 @@ body.ficha-alterada {
 .ficha-alterada #wrapper-ficha-a4 #identificacao_do_aluno_cpf,
 .ficha-alterada #wrapper-ficha-a4 #identificacao_do_aluno_id_matricula,
 .ficha-alterada #wrapper-ficha-a4 #identificacao_do_aluno_id_censo,
+.ficha-alterada #necessidades_educacionais_especiais .div-grid,
 .ficha-alterada #wrapper-ficha-a4 #horarios {
     flex: 0 0 auto !important;
     width: auto !important;
@@ -188,6 +189,10 @@ body.ficha-alterada {
 }
 
 .ficha-alterada #wrapper-ficha-a4 #observacoes {
+    flex: 1 1 auto !important;
+}
+
+.ficha-alterada #necessidades_educacionais_especiais #condicoes_NEE {
     flex: 1 1 auto !important;
 }
 
@@ -274,7 +279,9 @@ body.ficha-alterada {
 .ficha-alterada #identificacao_da_escola_endereco,
 .ficha-alterada #identificacao_do_aluno_endereco,
 .ficha-alterada #uso_de_imagem,
-.ficha-alterada #participa_do_s_programa_s_social_is{
+.ficha-alterada #participa_do_s_programa_s_social_is,
+.ficha-alterada #identificacao_do_aluno_nome
+{
     flex-direction: row !important;
     justify-content: top !important;
     text-transform: uppercase !important;
@@ -284,7 +291,8 @@ body.ficha-alterada {
 .ficha-alterada #identificacao_da_escola_endereco span,
 .ficha-alterada #identificacao_do_aluno_endereco span,
 .ficha-alterada #uso_de_imagem span,
-.ficha-alterada #participa_do_s_programa_s_social_is span
+.ficha-alterada #participa_do_s_programa_s_social_is span,
+.ficha-alterada #identificacao_do_aluno_nome span
 {
     margin-top: 2px !important;
     margin-right: 5px !important;
@@ -308,4 +316,11 @@ body.ficha-alterada {
 
 .ficha-alterada #possui_condicoes_NEE {
     display: none !important;
+}
+
+.ficha-alterada #wrapper-ficha-a4 #identificacao_do_aluno_nome
+{
+    font-size: 14px !important;
+    font-weight: 1000 !important;
+    color: var(--primary-color) !important;
 }

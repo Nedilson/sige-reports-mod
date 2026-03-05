@@ -288,32 +288,41 @@ function alterarFicha() {
         }
 
         // 5a. NECESSIDADES EDUCACIONAIS ESPECIAIS
-        const boxNEE = document.querySelector('#necessidades_educacionais_especiais');
+        const boxNEE = document.getElementById('necessidades_educacionais_especiais');
         if (boxNEE) {
-            // Título da seção
+            // Título da seção (ajuste de texto apenas)
             const titleP = boxNEE.querySelector('.div-title p');
             if (titleP) titleP.innerText = 'Necessidades educacionais especiais';
 
-            // Campo: Possui Condições?
-            const possuiCondicoesNEE = document.getElementById('possui_condicoes_NEE');
-            if (possuiCondicoesNEE) {
-                const labelPossui = possuiCondicoesNEE.querySelector('.text-bold');
-                if (labelPossui) labelPossui.innerText = 'Possui Condições de Necessidades Educacionais Especiais?';
-                
-                const valorPossui = possuiCondicoesNEE.innerText.replace(labelPossui ? labelPossui.innerText : '', '').trim().toUpperCase();
-                
-                // Só deve aparecer se preenchido com SIM
-                if (!valorPossui.includes('SIM')) {
-                    boxNEE.style.display = 'none';
+            // Captura dinâmica: armazena todos os elementos de campo presentes na seção em tempo de execução
+            const camposEncontrados = Array.from(boxNEE.querySelectorAll('.div-grid'));
+
+            const novoContainer = document.createElement('div');
+            novoContainer.className = 'container-fluid';
+            const row = criarRow(novoContainer);
+
+            let valorPossui = '';
+
+            camposEncontrados.forEach(campo => {
+                // Identificar o valor para controle de visibilidade (baseado no ID fixo definido no css/js de base)
+                if (campo.id === 'possui_condicoes_NEE') {
+                    const labelElement = campo.querySelector('.text-bold');
+                    valorPossui = campo.innerText.replace(labelElement ? labelElement.innerText : '', '').trim().toUpperCase();
                 }
+
+                // Adicionar o campo à linha única (A flexibilidade de largura agora é tratada pelo CSS genérico)
+                row.appendChild(criarColuna(1, campo.innerHTML, campo.id));
+            });
+
+            // Seção só aparece se houver confirmação de NEE (SIM)
+            if (!valorPossui.includes('SIM')) {
+                boxNEE.style.display = 'none';
             }
 
-            // Campo: Condições (Lista)
-            const condicoesEspeciais = document.getElementById('condicoes_NEE');
-            if (condicoesEspeciais) {
-                const labelEspeciais = condicoesEspeciais.querySelector('.text-bold');
-                if (labelEspeciais) labelEspeciais.innerText = 'Condições de Necessidades Educacionais Especiais:';
-            }
+            const title = boxNEE.querySelector('.div-title');
+            boxNEE.innerHTML = '';
+            if (title) boxNEE.appendChild(title);
+            boxNEE.appendChild(novoContainer);
         }
 
         // 5. OUTRAS INFORMAÇÕES
