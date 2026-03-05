@@ -22,7 +22,7 @@
     margin: 0 auto;
     background: white;
     padding: 0;
-    min-height: 29.7cm; /* Altura A4 aproximada */
+    max-height: 28; /* Altura máxima para toda ficha caber e uma folha A4 */
 }
 
 /* Header Principal: Logo + Nome (Fixado em 2cm) */
@@ -304,4 +304,8 @@ body.ficha-alterada {
 
 .ficha-alterada #wrapper-ficha-a4 #secao_observacoes .div-grid {
     font-size: 13px !important;
+}
+
+.ficha-alterada #possui_condicoes_NEE {
+    display: none !important;
 }

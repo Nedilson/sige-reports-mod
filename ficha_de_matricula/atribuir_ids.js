@@ -64,7 +64,10 @@ function atribuirIds() {
 
             // Mapeamento de IDs específicos conforme solicitação
             if (labelId === 'aluno_com_deficiencia') {
-                labelId = 'condicoes_de_necessidades_educacionais_especiais';
+                labelId = 'possui_condicoes_NEE';
+            }
+            if (labelId === 'tipo_de_deficiencia') {
+                labelId = 'condicoes_NEE';
             }
 
             let finalIdAtribuido = '';
@@ -237,8 +240,8 @@ function atribuirIds() {
         "ano",
         "saude",
         "necessidades_educacionais_especiais",
-        "condicoes_de_necessidades_educacionais_especiais",
-        "tipo_de_deficiencia",
+        "possui_condicoes_NEE",
+        "condicoes_NEE",
         "recursos_utilizados_em_sala_de_aula",
         "atendimento_educacional_utilizado",
         "transtorno_de_aprendizagem",
@@ -254,14 +257,18 @@ function atribuirIds() {
         "data_de_impressao"
     ];
 
+    const ids_ocasionais = []; // Lista de IDs que não devem emitir alerta de faltante ou extra
+
     // Verificação de conformidade com os IDs padrão
-    const faltantes = ids_padrao.filter(id => !todosIdsAtribuidos.includes(id));
-    const extras = todosIdsAtribuidos.filter(id => !ids_padrao.includes(id));
+    const faltantes = ids_padrao.filter(id => !todosIdsAtribuidos.includes(id) && !ids_ocasionais.includes(id));
+    const extras = todosIdsAtribuidos.filter(id => !ids_padrao.includes(id) && !ids_ocasionais.includes(id));
 
     if (faltantes.length > 0 || extras.length > 0) {
         let mensagem = "Divergência nos IDs encontrados:\n";
         if (faltantes.length > 0) mensagem += `\n❌ IDs faltantes (referência padrão que não foram encontrados na página):\n- ${faltantes.join("\n- ")}\n`;
         if (extras.length > 0) mensagem += `\n⚠️ IDs extras (encontrados na página mas não estão na referência padrão):\n- ${extras.join("\n- ")}\n`;
+        
+        console.warn(mensagem); // Gera o alerta no console
         alert(mensagem);
     }
 

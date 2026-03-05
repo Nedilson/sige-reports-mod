@@ -294,18 +294,25 @@ function alterarFicha() {
             const titleP = boxNEE.querySelector('.div-title p');
             if (titleP) titleP.innerText = 'Necessidades educacionais especiais';
 
-            // Campo: Condições
-            const condicoes = document.getElementById('condicoes_de_necessidades_educacionais_especiais');
-            if (condicoes) {
-                const labelNEE = condicoes.querySelector('.text-bold');
-                if (labelNEE) labelNEE.innerText = 'Condições de Necessidades Educacionais Especiais:';
+            // Campo: Possui Condições?
+            const possuiCondicoesNEE = document.getElementById('possui_condicoes_NEE');
+            if (possuiCondicoesNEE) {
+                const labelPossui = possuiCondicoesNEE.querySelector('.text-bold');
+                if (labelPossui) labelPossui.innerText = 'Possui Condições de Necessidades Educacionais Especiais?';
                 
-                const valorNEE = condicoes.innerText.replace(labelNEE.innerText, '').trim().toUpperCase();
+                const valorPossui = possuiCondicoesNEE.innerText.replace(labelPossui ? labelPossui.innerText : '', '').trim().toUpperCase();
                 
                 // Só deve aparecer se preenchido com SIM
-                if (!valorNEE.includes('SIM')) {
+                if (!valorPossui.includes('SIM')) {
                     boxNEE.style.display = 'none';
                 }
+            }
+
+            // Campo: Condições (Lista)
+            const condicoesEspeciais = document.getElementById('condicoes_NEE');
+            if (condicoesEspeciais) {
+                const labelEspeciais = condicoesEspeciais.querySelector('.text-bold');
+                if (labelEspeciais) labelEspeciais.innerText = 'Condições de Necessidades Educacionais Especiais:';
             }
         }
 
@@ -395,16 +402,6 @@ function alterarFicha() {
                 boxOutros.parentNode.insertBefore(boxObs, boxOutros.nextSibling);
             } else {
                 wrapper.appendChild(boxObs);
-            }
-        }
-
-        // 6. Negrito em Condições de NEE e SIM
-        const deficiencia = document.getElementById('condicoes_de_necessidades_educacionais_especiais');
-        if (deficiencia) {
-            const texto = deficiencia.innerText.toUpperCase();
-            if (texto.includes('SIM')) {
-                deficiencia.style.fontWeight = 'bold';
-                deficiencia.style.backgroundColor = '#fff3cd'; 
             }
         }
     }

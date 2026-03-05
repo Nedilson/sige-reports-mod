@@ -87,7 +87,7 @@ function selecionarCopiarImprimir() {
       // Imprimir após um momento
       setTimeout(() => {
         window.print();
-      }, 100);
+      }, 1000);
     } catch (error) {
       console.error('Erro:', error);
       alert('Ocorreu um erro durante o processo. Verifique o console para detalhes.');
