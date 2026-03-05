@@ -280,7 +280,8 @@ body.ficha-alterada {
 .ficha-alterada #identificacao_do_aluno_endereco,
 .ficha-alterada #uso_de_imagem,
 .ficha-alterada #participa_do_s_programa_s_social_is,
-.ficha-alterada #identificacao_do_aluno_nome
+.ficha-alterada #identificacao_do_aluno_nome,
+.ficha-alterada #saude .div-grid:nth-child(2)
 {
     flex-direction: row !important;
     justify-content: top !important;
@@ -292,7 +293,8 @@ body.ficha-alterada {
 .ficha-alterada #identificacao_do_aluno_endereco span,
 .ficha-alterada #uso_de_imagem span,
 .ficha-alterada #participa_do_s_programa_s_social_is span,
-.ficha-alterada #identificacao_do_aluno_nome span
+.ficha-alterada #identificacao_do_aluno_nome span,
+.ficha-alterada #saude span
 {
     margin-top: 2px !important;
     margin-right: 5px !important;
