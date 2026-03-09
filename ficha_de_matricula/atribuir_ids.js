@@ -303,7 +303,7 @@ function atribuirIds() {
     ]; // Lista de IDs base que não devem emitir alerta de faltante ou extra
 
     function isOcasional(id) {
-        return ids_ocasionais.some(ocasional => id === ocasional || id.startsWith(ocasional + '_'));
+        return ids_ocasionais.some(ocasional => id === ocasional));
     }
 
     // Verificação de conformidade com os IDs padrão
