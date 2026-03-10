@@ -20,7 +20,7 @@ function atribuirIds() {
         // 1. Identificar o título da seção para definir o ID da BOX
         const titleDiv = box.querySelector('.div-title');
         const titleP = titleDiv ? titleDiv.querySelector('p') : null;
-        
+
         let boxIdBase = '';
         if (titleP) {
             boxIdBase = sanitizar(titleP.innerText);
@@ -49,7 +49,7 @@ function atribuirIds() {
             let labelText = '';
             let valorText = '';
             const spanBold = campo.querySelector('.text-bold');
-            
+
             if (spanBold) {
                 labelText = spanBold.innerText.replace(':', '').trim();
                 valorText = campo.innerText.replace(spanBold.innerText, '').trim();
@@ -166,7 +166,7 @@ function atribuirIds() {
             const labelText = 'Data de impressão';
             const valorText = p.innerText.replace('Data de impressão:', '').trim();
             const labelId = sanitizar(labelText);
-            
+
             p.id = labelId;
             todosIdsAtribuidos.push(labelId);
             dadosFicha[labelId] = valorText;
@@ -197,7 +197,7 @@ function atribuirIds() {
     /**
      * Função para baixar o JSON armazenado
      */
-    window.baixarFichaJSON = function() {
+    window.baixarFichaJSON = function () {
         const dados = window.dadosFichaExtraidos;
         if (!dados) {
             console.error("Nenhum dado encontrado para baixar.");
@@ -206,12 +206,12 @@ function atribuirIds() {
 
         let nomeAluno = dados['identificacao_do_aluno_nome'] || 'ALUNO_NAO_IDENTIFICADO';
         nomeAluno = nomeAluno.replace(/[<>:"/\\|?*]+/g, '').trim(); // Remove caracteres de arquivo inválidos no Windows
-        
+
         const nomeArquivo = `${nomeAluno} - Ficha de matrícula.json`;
         const jsonString = JSON.stringify(dados, null, 2);
         const blob = new Blob([jsonString], { type: 'application/json' });
         const url = URL.createObjectURL(blob);
-        
+
         const a = document.createElement('a');
         a.href = url;
         a.download = nomeArquivo;
@@ -219,7 +219,7 @@ function atribuirIds() {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        
+
         console.log(`Download concluído: ${nomeArquivo}`);
     };
 
@@ -303,7 +303,7 @@ function atribuirIds() {
     ]; // Lista de IDs base que não devem emitir alerta de faltante ou extra
 
     function isOcasional(id) {
-        return ids_ocasionais.some(ocasional => id === ocasional));
+        return ids_ocasionais.some(ocasional => id === ocasional);
     }
 
     // Verificação de conformidade com os IDs padrão
@@ -314,7 +314,7 @@ function atribuirIds() {
         let mensagem = "Divergência nos IDs encontrados:\n";
         if (faltantes.length > 0) mensagem += `\n❌ IDs faltantes (referência padrão que não foram encontrados na página):\n- ${faltantes.join("\n- ")}\n`;
         if (extras.length > 0) mensagem += `\n⚠️ IDs extras (encontrados na página mas não estão na referência padrão):\n- ${extras.join("\n- ")}\n`;
-        
+
         console.warn(mensagem); // Gera o alerta no console
         alert(mensagem);
     }
