@@ -118,9 +118,9 @@ function selecionarCopiarImprimir() {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                 </svg>
             </div>
-            <h2 style="font-size: 24px; font-weight: 700; margin: 0 0 16px 0;">FICHA COPIADA!</h2>
+            <h2 style="font-size: 24px; font-weight: 700; margin: 0 0 16px 0;">Na guia de matrícula, aperte o botão AVANÇAR</h2>
             <div style="font-size: 16px; line-height: 1.6; opacity: 0.9;">
-                <p style="margin-bottom: 12px;">Na guia de matrícula, aperte o botão <strong>AVANÇAR</strong>.</p>
+                <p style="margin-bottom: 12px;">FICHA COPIADA!</p>
                 <p>Depois retorne a esta para imprimir a ficha.</p>
             </div>
         </div>
@@ -132,6 +132,64 @@ function selecionarCopiarImprimir() {
         removerElemento(msgOverlay);
         if (callback) callback();
     }, 10000);
+  }
+
+  function mostrarConfirmacaoTransporte(callbackConfirm) {
+    const dialogOverlay = document.createElement('div');
+    dialogOverlay.className = 'sige-overlay';
+    
+    dialogOverlay.innerHTML = `
+        <div class="sige-dialog">
+            <div style="margin-bottom: 20px;">
+                <svg style="width: 48px; height: 48px; color: #f59e0b;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                </svg>
+            </div>
+            <h3 style="margin: 0 0 12px 0; color: #1e293b; font-size: 20px;">Solicitação de Transporte</h3>
+            <p style="margin: 0 0 24px 0; color: #64748b; font-size: 15px; line-height: 1.5;">Gerar solicitação de transporte agora?</p>
+            
+            <div style="display: flex; gap: 12px;">
+                <button id="simTranspConfirmBtn" class="sige-btn sige-btn-primary" style="flex: 1;">SIM</button>
+                <button id="naoTranspConfirmBtn" class="sige-btn sige-btn-danger" style="flex: 1;">NÃO</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(dialogOverlay);
+    
+    document.getElementById('simTranspConfirmBtn').addEventListener('click', () => {
+        removerElemento(dialogOverlay);
+        if (callbackConfirm) callbackConfirm();
+    });
+    
+    document.getElementById('naoTranspConfirmBtn').addEventListener('click', () => {
+        removerElemento(dialogOverlay);
+    });
+  }
+
+  function mostrarErro(mensagem) {
+    const errorOverlay = document.createElement('div');
+    errorOverlay.className = 'sige-overlay';
+    
+    errorOverlay.innerHTML = `
+        <div class="sige-dialog" style="border-top: 4px solid #ef4444;">
+            <div style="margin-bottom: 20px;">
+                <svg style="width: 48px; height: 48px; color: #ef4444;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+            </div>
+            <h3 style="margin: 0 0 12px 0; color: #1e293b; font-size: 20px;">Erro</h3>
+            <p style="margin: 0 0 24px 0; color: #64748b; font-size: 15px; line-height: 1.5;">${mensagem}</p>
+            
+            <button id="fecharErroBtn" class="sige-btn sige-btn-danger" style="width: 100%;">FECHAR</button>
+        </div>
+    `;
+    
+    document.body.appendChild(errorOverlay);
+    
+    document.getElementById('fecharErroBtn').addEventListener('click', () => {
+        removerElemento(errorOverlay);
+    });
   }
 
   function processarImpressao(solicitarTransporte = false) {
@@ -158,9 +216,9 @@ function selecionarCopiarImprimir() {
           if (solicitarTransporte) {
               const posPrint = () => {
                   window.removeEventListener('afterprint', posPrint);
-                  if (confirm('GERAR SOLICITAÇÃO DE TRANSPORTE?')) {
+                  mostrarConfirmacaoTransporte(() => {
                       gerarFormularioTransporteEscolar();
-                  }
+                  });
               };
               window.addEventListener('afterprint', posPrint);
           }
@@ -169,7 +227,7 @@ function selecionarCopiarImprimir() {
 
     } catch (error) {
       console.error('Erro:', error);
-      alert('Ocorreu um erro durante o processo.');
+      mostrarErro('Ocorreu um erro durante o processo.');
     }
   }
 
