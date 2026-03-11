@@ -1,13 +1,33 @@
-<!DOCTYPE html>
+﻿window.baixarJSONTransporte = function() {
+    const dados = {
+        data_solicitacao: document.getElementById('data_solicitacao')?.innerText.trim(),
+        contato: document.getElementById('contato')?.innerText.trim(),
+        responsavel: document.getElementById('responsavel')?.innerText.trim(),
+        cpf_responsavel: document.getElementById('cpf_responsavel')?.innerText.trim(),
+        aluno: document.getElementById('aluno')?.innerText.trim(),
+        data_nascimento_aluno: document.getElementById('data_nascimento_aluno')?.innerText.trim(),
+        cpf_aluno: document.getElementById('cpf_aluno')?.innerText.trim(),
+        portador_necessidades_especiais: document.getElementById('pne_sim')?.innerText.includes('X') ? 'SIM' : 'NÃO',
+        serie: document.getElementById('serie')?.innerText.trim(),
+        turma: document.getElementById('turma')?.innerText.trim(),
+        periodo: document.getElementById('periodo')?.innerText.trim(),
+        unidade_ensino: document.getElementById('unidade_ensino')?.innerText.trim(),
+        endereco_residencial: document.getElementById('endereco_residencial')?.innerText.trim(),
+        ponto_coleta: document.getElementById('ponto_coleta')?.innerText.trim(),
+        sugestao_rota: document.getElementById('sugestao_rota')?.innerText.trim()
+    };
+
+};
+
+const imgLogo = document.querySelector('.table-relatorio img');
+
+
+function gerarFormularioTransporteEscolar() {
+    const htmlContent = `<!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="U">
+    <meta charset="UTF-8">
     <title>Formulário de Transporte Escolar Rural</title>
-    <script>
-        
-    </script>
-
-
     <style>
         /* Configurações de Impressão */
         @page {
@@ -329,12 +349,10 @@
 
 <div class="container">
 
-    <!-- FORMULÁRIO ESQUERDO: Solicitação -->
     <div class="form-page">
-        <!-- Cabeçalho -->
         <div class="header">
             <div class="header-center">
-                <img src="logo-semed.png" alt="Logo SEMED">
+                <img src="${imgLogo ? imgLogo.src : 'logo-semed.png'}" alt="Logo SEMED">
             </div>
             <div class="header-center">
                 <div class="sub-header">Gerência de Transporte Escolar</div>
@@ -342,7 +360,6 @@
             </div>
         </div>
 
-        <!-- Dados da Solicitação -->
         <div class="form-row">
             <div class="label">Data da solicitação:</div>
             <div id="data_solicitacao" class="input-line " contenteditable="true">___/___/_____</div>
@@ -350,7 +367,6 @@
             <div id="contato" class="input-line" contenteditable="true">(___) ______________</div>
         </div>
 
-        <!-- Dados do Responsável -->
         <div class="form-row">
             <div class="label">Responsável:</div>
             <div id="responsavel" class="input-line" contenteditable="true"></div>
@@ -358,7 +374,6 @@
             <div id="cpf_responsavel" class="input-line " contenteditable="true"></div>
         </div>
 
-        <!-- Dados do Aluno -->
         <div class="form-row">
             <div class="label">Aluno:</div>
             <div id="aluno" class="input-line" contenteditable="true"></div>
@@ -371,7 +386,6 @@
             <div id="cpf_aluno" class="input-line" contenteditable="true"></div>
         </div>
 
-        <!-- Necessidades Especiais -->
         <div class="form-row">
             <div class="label">Portador de necessidades especiais:</div>
             <div class="checkbox-row">
@@ -380,7 +394,6 @@
             </div>
         </div>
 
-        <!-- Dados Escolares -->
         <div class="form-row">
             <div class="label">Serie:</div>
             <div id="serie" class="input-line " contenteditable="true"></div>
@@ -395,7 +408,6 @@
             <div id="unidade_ensino" class="input-line" contenteditable="true"></div>
         </div>
 
-        <!-- Localização -->
         <div class="form-row">
             <div class="label">Endereço:</div>
             <div id="endereco_residencial" class="input-line" contenteditable="true"></div>
@@ -411,12 +423,10 @@
             <div id="sugestao_rota" class="input-line" contenteditable="true"></div>
         </div>
 
-        <!-- Informações Legais PNATE -->
         <div class="info-text">
             Informamos que de acordo com a Lei nº 10.880/04, Institui o Programa Nacional de Apoio ao Transporte do Escolar – PNATE no Art. 2º Fica instituído o Programa Nacional de Apoio ao Transporte do Escolar – PNATE, no âmbito do MEC, a ser executado pelo Fundo Nacional de Desenvolvimento da Educação – FNDE, com o objetivo de oferecer transporte escolar aos alunos da educação básica pública, residentes em área rural, o transporte escolar é exclusivo para moradores da zona rural.
         </div>
 
-        <!-- Decreto Municipal -->
         <div class="decreto-section">
             <span class="decreto-title">DECRETO Nº 1.604, DE 14 DE MAIO DE 2018</span>
             Art. 1º Este Decreto regulamenta o transporte escolar rural no âmbito do município de Palmas, destinado a alunos residentes na zona rural desta Capital, à distância superior a 1.500m (mil e quinhentos metros) da via principal, definida como rota central de embarque de passageiros, ou a 3.000m (três mil metros) da unidade educacional localizada na zona rural ou urbana, integrante da rede pública de ensino municipal, a que estiverem matriculados.
@@ -430,26 +440,22 @@
             III - assentamentos.
         </div>
 
-        <!-- Assinatura Solicitação -->
         <div class="signature-section">
             <div class="signature-line"></div>
             <div class="signature-label">Assinatura do solicitante</div>
         </div>
     </div>
 
-    <!-- FORMULÁRIO DIREITO: Termo de Ciência -->
     <div class="form-page" id="termo_ciencia">
-        <!-- Cabeçalho -->
         <div class="header">
             <div class="header-center">
-                <img src="logo-semed.png" alt="Logo SEMED">
+                <img src="${imgLogo ? imgLogo.src : 'logo-semed.png'}" alt="Logo SEMED">
             </div>
         </div>
         <div class="sub-header">Gerência de Transporte Escolar</div>
         
         <div class="title ">TERMO DE CIÊNCIA</div>
 
-        <!-- Conteúdo do Termo -->
         <div class="termo-body">
             Eu, <span id="termo_responsavel" class="termo-field " contenteditable="true"></span>, 
             responsável do(a) aluno(a) <span id="termo_aluno" class="termo-field " contenteditable="true"></span>, 
@@ -457,19 +463,16 @@
             manifesto ciência ao Decreto nº 1.604/2018, que traz as normativas sobre o transporte escolar rural na cidade de Palmas/TO, especialmente quanto aos seguintes aspectos previstos na norma citada:
         </div>
 
-        <!-- Itens do Decreto -->
         <ul class="ordered-list">
             <li>É de responsabilidade da família o transporte do(a) aluno(a) da residência até a distância de 1.500 metros da via definida como rota central de embarque (artigo 2º, §2º);</li>
             <li>É obrigação do usuário comparecer no local determinado pela Secretaria Municipal da Educação, nos horários definidos, para o embarque e desembarque de passageiros (artigo 10, inciso IV);</li>
             <li>É de responsabilidade dos pais ou responsáveis acompanhar o estudante até o local de embarque do transporte escolar rural, bem com o aguardá-los no desembarque, sob pena de responsabilização por omissão (artigo 10, §1º).</li>
         </ul>
 
-        <!-- Data e Local -->
         <div class="date-line">
             Palmas, <span id="termo_dia" class="termo-field text-center" contenteditable="true"></span> de <span id="termo_mes" class="termo-field text-center" contenteditable="true"></span> de <span id="termo_ano" class="termo-field text-center" contenteditable="true"></span>.
         </div>
 
-        <!-- Assinatura Responsável -->
         <div class="signature-section ">
             <div class="signature-line"></div>
             <div class="signature-label">Responsável</div>
@@ -487,8 +490,7 @@
     };
 
     function extrairTelefone(texto, n = 1) {
-        // Regex para encontrar padrões de telefone (Equivalente ao VBA)
-        const regex = /\(*\d{2,}\)*[\s-]*\d+[\s-]*\d+/g;
+        const regex = /\\(*\\d{2,}\\)*[\\s-]*\\d+[\\s-]*\\d+/g;
         const colecao = texto.match(regex);
         if (!colecao) return "";
 
@@ -496,12 +498,11 @@
         let numeroFinal = "";
 
         for (const item of colecao) {
-            let numeroTemp = item.replace(/[\(\)\-\s]/g, "");
+            let numeroTemp = item.replace(/[\\(\\)\\-\\s]/g, "");
             if (numeroTemp.length < 8) continue;
 
             contador++;
             if (contador === n) {
-                // Regras de tratamento
                 if (numeroTemp.length === 8 && numeroTemp.startsWith("3")) continue;
                 
                 if (numeroTemp.length === 8 && !numeroTemp.startsWith("3")) {
@@ -518,43 +519,36 @@
         }
 
         if (numeroFinal.length === 11) {
-            return `(${numeroFinal.substring(0, 2)}) ${numeroFinal.substring(2, 3)} ${numeroFinal.substring(3, 7)}-${numeroFinal.substring(7)}`;
+            return "(" + numeroFinal.substring(0, 2) + ") " + numeroFinal.substring(2, 3) + " " + numeroFinal.substring(3, 7) + "-" + numeroFinal.substring(7);
         }
         return "";
     }
 
     function limparEndereco(endereco) {
         if (!endereco) return "";
-        // 1. Remover do CEP em diante
-        // 2. Remover vírgulas e espaços duplicados (ex: ", , , ")
-        // 3. Remover espaços múltiplos
         let limpo = endereco.split(/CEP/i)[0]
-            .replace(/(,\s*)+/g, ', ')
-            .replace(/\s+/g, ' ')
+            .replace(/(,\\s*)+/g, ', ')
+            .replace(/\\s+/g, ' ')
             .trim()
             .replace(/,$/, '');
         return limpo;
     }
 
     function preencherFormulario(dados) {
-        // Data de Solicitação (Hoje)
         const hoje = new Date();
         const dia = String(hoje.getDate()).padStart(2, '0');
         const mes = String(hoje.getMonth() + 1).padStart(2, '0');
         const ano = hoje.getFullYear();
-        document.getElementById('data_solicitacao').innerText = `${dia}/${mes}/${ano}`;
+        document.getElementById('data_solicitacao').innerText = dia + "/" + mes + "/" + ano;
 
-        // Contato extraído das observações
         const contato = extrairTelefone(dados.observacoes || "");
         if (contato) document.getElementById('contato').innerText = contato;
 
-        // Dados do Aluno
         document.getElementById('aluno').innerText = dados.identificacao_do_aluno_nome || "";
         document.getElementById('data_nascimento_aluno').innerText = dados.identificacao_do_aluno_data_de_nascimento || "";
         document.getElementById('cpf_aluno').innerText = dados.identificacao_do_aluno_cpf || "";
         document.getElementById('termo_aluno').innerText = dados.identificacao_do_aluno_nome || "";
 
-        // Portador de necessidades especiais
         if (dados.possui_condicoes_NEE === "SIM") {
             document.getElementById('pne_sim').innerText = "(X)";
             document.getElementById('pne_nao').innerText = "( )";
@@ -563,13 +557,11 @@
             document.getElementById('pne_nao').innerText = "(X)";
         }
 
-        // Dados Escolares
         document.getElementById('serie').innerText = dados.serie || "";
         document.getElementById('turma').innerText = dados.turma || "";
         document.getElementById('unidade_ensino').innerText = dados.identificacao_da_escola_unidade_de_ensino || "";
         document.getElementById('termo_unidade_ensino').innerText = dados.identificacao_da_escola_unidade_de_ensino || "";
         
-        // Período de acordo com o final da turma
         if (dados.turma) {
             if (dados.turma.toUpperCase().endsWith("VESP")) {
                 document.getElementById('periodo').innerText = "Vespertino";
@@ -578,16 +570,13 @@
             }
         }
 
-        // Localização
         document.getElementById('endereco_residencial').innerText = limparEndereco(dados.identificacao_do_aluno_endereco || "");
 
-        // Dados do Termo de Ciência
         document.getElementById('termo_dia').innerText = dia;
         const meses = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
         document.getElementById('termo_mes').innerText = meses[hoje.getMonth()];
         document.getElementById('termo_ano').innerText = ano;
 
-        // Lógica de Responsável / Filiação
         const f1 = (dados.filiacao1 || "").trim();
         const f2 = (dados.filiacao2 || "").trim();
 
@@ -605,10 +594,8 @@
     function mostrarModalFiliacao(n1, c1, n2, c2) {
         document.querySelector('#modal-filiacao h3').innerText = "Selecione o Responsável";
         const container = document.getElementById('opcoes-filiacao');
-        container.innerHTML = `
-            <button class="btn-filiacao" onclick="selecionarResponsavel('${n1}', '${c1}')">1. ${n1}</button>
-            <button class="btn-filiacao" onclick="selecionarResponsavel('${n2}', '${c2}')">2. ${n2}</button>
-        `;
+        container.innerHTML = '<button class="btn-filiacao" onclick="selecionarResponsavel(\\'' + n1 + '\\', \\'' + c1 + '\\')">1. ' + n1 + '</button>' +
+                              '<button class="btn-filiacao" onclick="selecionarResponsavel(\\'' + n2 + '\\', \\'' + c2 + '\\')">2. ' + n2 + '</button>';
         document.getElementById('modal-filiacao').style.display = 'flex';
     }
 
@@ -617,8 +604,6 @@
         document.getElementById('cpf_responsavel').innerText = cpf;
         document.getElementById('termo_responsavel').innerText = nome;
         document.getElementById('modal-filiacao').style.display = 'none';
-        
-        // Após a seleção do responsável, solicita seleção da rota
         solicitarRota();
     }
 
@@ -628,17 +613,14 @@
         const titulo = modal.querySelector('h3');
         
         titulo.innerText = "Selecione a Rota";
-        container.innerHTML = `
-            <button class="btn-filiacao" onclick="definirRota('SONHO MEU')">SONHO MEU</button>
-            <button class="btn-filiacao" onclick="definirRota('FUMAÇA')">FUMAÇA</button>
-        `;
+        container.innerHTML = '<button class="btn-filiacao" onclick="definirRota(\\'SONHO MEU\\')">SONHO MEU</button>' +
+                              '<button class="btn-filiacao" onclick="definirRota(\\'FUMAÇA\\')">FUMAÇA</button>';
         modal.style.display = 'flex';
     }
 
     function definirRota(rota) {
         document.getElementById('sugestao_rota').innerText = rota;
         document.getElementById('modal-filiacao').style.display = 'none';
-        // Resetar título para evitar confusão na próxima abertura
         document.querySelector('#modal-filiacao h3').innerText = "Selecione o Responsável";
         validarTodos();
     }
@@ -648,14 +630,13 @@
         campos.forEach(campo => {
             campo.addEventListener('input', () => validarCampo(campo));
             campo.addEventListener('blur', () => validarCampo(campo));
-            validarCampo(campo); // Validação inicial
+            validarCampo(campo);
         });
     }
 
     function validarCampo(campo) {
         const valor = campo.innerText.trim();
         const placeholders = ["___/___/_____", "(___) ______________", "( )"];
-        
         if (valor === "" || placeholders.includes(valor)) {
             campo.classList.add('campo-vazio');
         } else {
@@ -668,6 +649,10 @@
         campos.forEach(validarCampo);
     }
 </script>
-
 </body>
-</html>
+</html>`;
+
+    document.open();
+    document.write(htmlContent);
+    document.close();
+}

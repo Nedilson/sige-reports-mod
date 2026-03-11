@@ -158,7 +158,9 @@ function selecionarCopiarImprimir() {
           if (solicitarTransporte) {
               const posPrint = () => {
                   window.removeEventListener('afterprint', posPrint);
-                  carregarFormTransporte();
+                  if (confirm('GERAR SOLICITAÇÃO DE TRANSPORTE?')) {
+                      gerarFormularioTransporteEscolar();
+                  }
               };
               window.addEventListener('afterprint', posPrint);
           }
@@ -169,24 +171,6 @@ function selecionarCopiarImprimir() {
       console.error('Erro:', error);
       alert('Ocorreu um erro durante o processo.');
     }
-  }
-
-  function carregarFormTransporte() {
-    const url = '../form_transporte_escolar/form_transporte_escolar.html';
-    
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            const dadosParaManter = window.dadosFichaExtraidos;
-            document.open();
-            document.write(html);
-            window.dadosFichaExtraidos = dadosParaManter;
-            document.close();
-        })
-        .catch(err => {
-            console.error('Erro ao carregar formulário de transporte:', err);
-            alert('Não foi possível carregar o formulário de transporte automaticamente.');
-        });
   }
 
   document.getElementById('simBtn').addEventListener('click', () => processarImpressao(false));
