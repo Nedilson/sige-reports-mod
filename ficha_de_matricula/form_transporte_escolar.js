@@ -52,7 +52,8 @@ function gerarFormularioTransporteEscolar() {
             background: white;
             display: flex;
             box-sizing: border-box;
-            padding: 0.8cm;
+            padding: 0.5cm;
+            padding-top: 0.8cm; 
             gap: 0.5cm;
             box-shadow: 0 0 20px rgba(0,0,0,0.1);
         }
@@ -63,9 +64,13 @@ function gerarFormularioTransporteEscolar() {
             height: 100%;
             box-sizing: border-box;
             padding: 0.4cm;
+            padding-top: 0.2cm;
+            padding-bottom: 0cm;
             display: flex;
             flex-direction: column;
-            border: 1px solid #eeeeee98;
+            border: 1px solid lightgray;
+            border-radius: 0.08cm;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
         }
 
         /* Cabeçalho e Logos */
@@ -73,7 +78,7 @@ function gerarFormularioTransporteEscolar() {
             display: flex;
             justify-content: left;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         #termo_ciencia .header {
@@ -119,7 +124,7 @@ function gerarFormularioTransporteEscolar() {
         .title {
             text-align: center;
             font-weight: bold;
-            margin-bottom: 12px;
+            margin-bottom: 5px;
             text-transform: none;
         }
 
@@ -333,6 +338,10 @@ function gerarFormularioTransporteEscolar() {
         }
 
         #periodo {
+            text-transform: uppercase;
+        }
+
+        .input-line, .termo-field{
             text-transform: uppercase;
         }
     </style>
